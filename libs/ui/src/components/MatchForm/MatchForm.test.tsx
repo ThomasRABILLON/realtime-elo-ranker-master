@@ -5,7 +5,8 @@ import MatchForm from './MatchForm';
 
 describe('<MatchForm />', () => {
   test('it should mount', () => {
-    render(<MatchForm />);
+    const mockCallback = jest.fn();
+    render(<MatchForm callback={mockCallback} />);
 
     const matchForm = screen.getByTestId('MatchForm');
 
