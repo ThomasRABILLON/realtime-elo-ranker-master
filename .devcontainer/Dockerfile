@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim
 
-LABEL maintainer="Votre nom"
-LABEL maintainer.email="Votre mail"
+LABEL maintainer="ThomasRABILLON"
+LABEL maintainer.email="thomas.rabillon@etu.univ-orleans.fr"
 
 RUN apt update
 RUN apt install -y curl git
