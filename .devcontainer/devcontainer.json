@@ -1,0 +1,15 @@
+{
+    "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.schema.json",
+      "name": "advanced-nodejs-td",
+      "build": {
+          "dockerfile": "Dockerfile"
+      },
+      // Définition du répertoire de travail
+      "workspaceFolder": "/workspace",
+      "mounts": [
+          // Pour monter le répertoire de travail
+          "source=${localWorkspaceFolder},target=/workspace,type=bind",
+          // Pour monter un répertoire de clés SSH si nécessaire
+          // "source=${localEnv:HOME}/.ssh/id_rsa,target=/root/.ssh/id_rsa,type=bind,consistency=cached"
+      ]
+  }
