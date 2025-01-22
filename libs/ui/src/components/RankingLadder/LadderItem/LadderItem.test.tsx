@@ -5,8 +5,10 @@ import LadderItem from './LadderItem';
 
 describe('<LadderItem />', () => {
   test('it should mount', () => {
-    const player = { id: '1', rank: 1 }; // mock player data
-    render(<LadderItem player={player} />);
+    render(<LadderItem player={{
+      id: "Player1",
+      rank: 1000
+    }}/>);
 
     const ladderItem = screen.getByTestId('LadderItem');
 

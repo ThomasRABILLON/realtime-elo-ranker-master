@@ -5,8 +5,10 @@ import PlayerForm from './PlayerForm';
 
 describe('<PlayerForm />', () => {
   test('it should mount', () => {
-    const mockCallback = jest.fn();
-    render(<PlayerForm callback={mockCallback} />);
+    render(<PlayerForm callback={(pName) => {
+      console.log(pName);
+      return Promise.resolve(new Response());
+    }}/>);
 
     const playerForm = screen.getByTestId('PlayerForm');
 

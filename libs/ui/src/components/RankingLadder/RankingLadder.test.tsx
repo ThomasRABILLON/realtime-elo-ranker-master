@@ -5,12 +5,13 @@ import RankingLadder from './RankingLadder';
 
 describe('<RankingLadder />', () => {
   test('it should mount', () => {
-    const mockData = [
-      { id: '1', name: 'Player 1', score: 100, rank: 1 },
-      { id: '2', name: 'Player 2', score: 90, rank: 2 },
-      // Add more mock player data as needed
-    ];
-    render(<RankingLadder data={mockData} />);
+    render(<RankingLadder data={[
+      {
+        id: "Player1",
+        rank: 2000
+      }
+    ]}/>);
+
     const rankingLadder = screen.getByTestId('RankingLadder');
 
     expect(rankingLadder).toBeInTheDocument();

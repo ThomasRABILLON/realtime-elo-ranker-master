@@ -5,8 +5,10 @@ import MatchForm from './MatchForm';
 
 describe('<MatchForm />', () => {
   test('it should mount', () => {
-    const mockCallback = jest.fn();
-    render(<MatchForm callback={mockCallback} />);
+    render(<MatchForm callback={(advA, advB, result) => {
+      console.log(advA, advB, result);
+      return Promise.resolve(new Response());
+    }} />);
 
     const matchForm = screen.getByTestId('MatchForm');
 
