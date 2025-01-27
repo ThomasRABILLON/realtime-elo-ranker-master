@@ -86,13 +86,13 @@ export default function Home() {
       fetchRanking(API_BASE_URL).then(setLadderData);
     } catch (error) {
       // TODO: toast error
-      console.error(error);
+      // console.error(error);
     }
     const eventSource = subscribeRankingEvents(API_BASE_URL);
     eventSource.onmessage = (msg: MessageEvent) => {
       const event: RankingEvent = JSON.parse(msg.data);
       if (event.type === "Error") {
-        console.error(event.message);
+        // console.error(event.message);
         return;
       }
       if (event.type === RankingEventType.RankingUpdate) {
@@ -101,7 +101,7 @@ export default function Home() {
     };
     eventSource.onerror = (err) => {
       // TODO: toast error
-      console.error(err);
+      // console.error(err);
       eventSource.close();
     };
     return () => eventSource.close();
