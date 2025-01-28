@@ -1,5 +1,5 @@
 export interface Match {
-  winner: string;
-  loser: string;
-  draw: boolean;
+    winner: string;
+    loser: string;
+    draw: boolean;
 }

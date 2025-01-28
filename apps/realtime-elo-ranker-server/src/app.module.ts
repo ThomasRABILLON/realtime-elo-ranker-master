@@ -4,10 +4,16 @@ import { AppService } from './app.service';
 import { RankingController } from './ranking/ranking.controller';
 import { RankingService } from './ranking/ranking.service';
 import { PlayerController } from './ranking/player.controller';
+import { MatchController } from './ranking/match.controller';
 
 @Module({
-  imports: [],
-  controllers: [AppController, PlayerController, RankingController],
-  providers: [AppService, RankingService],
+    imports: [],
+    controllers: [
+        AppController,
+        PlayerController,
+        RankingController,
+        MatchController,
+    ],
+    providers: [AppService, RankingService],
 })
 export class AppModule {}
