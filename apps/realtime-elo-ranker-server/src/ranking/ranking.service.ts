@@ -3,12 +3,18 @@ import { Player } from './interfaces/player.interface';
 import { Match } from './interfaces/match.interface';
 import { newRank, winProbability } from './utils/match-calculation';
 
+/**
+ * Résultat d'un match
+ */
 enum Result {
     WIN = 1,
     LOSS = 0,
     DRAW = 0.5,
 }
 
+/**
+ * Service de classement
+ */
 @Injectable()
 export class RankingService {
     private readonly rankings: Player[] = [];
