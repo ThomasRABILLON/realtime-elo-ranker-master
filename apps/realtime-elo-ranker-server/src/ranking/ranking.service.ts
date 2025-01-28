@@ -14,15 +14,36 @@ export class RankingService {
     private readonly rankings: Player[] = [];
     private readonly matches: Match[] = [];
 
+    /**
+     * Ajoute un joueur au classement
+     * @param player Joueur à ajouter
+     */
     addPlayer(player: Player): void {
-        player.rank = 0;
+        const meanPlayerRank = this.rankings.reduce(
+            (acc, player) => acc + player.rank,
+            0,
+        );
+
+        player.rank =
+            this.rankings.length === 0
+                ? 0
+                : meanPlayerRank / this.rankings.length;
+
         this.rankings.push(player);
     }
 
+    /**
+     * Récupère le classement des joueurs
+     * @returns Classement des joueurs
+     */
     getRankings(): Player[] {
         return this.rankings;
     }
 
+    /**
+     * Ajoute et traite le résultat d'un match
+     * @param match Match à ajouter
+     */
     addMatch(match: Match): void {
         const winner = this.rankings.find(
             (player) => player.id === match.winner,
