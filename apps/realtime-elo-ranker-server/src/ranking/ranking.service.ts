@@ -25,15 +25,11 @@ export class RankingService {
      * @param player Joueur à ajouter
      */
     addPlayer(player: Player): void {
-        const meanPlayerRank = this.rankings.reduce(
-            (acc, player) => acc + player.rank,
-            0,
-        );
-
         player.rank =
             this.rankings.length === 0
                 ? 0
-                : meanPlayerRank / this.rankings.length;
+                : this.rankings.reduce((acc, player) => acc + player.rank, 0) /
+                  this.rankings.length;
 
         this.rankings.push(player);
     }
