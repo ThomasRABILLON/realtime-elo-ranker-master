@@ -55,4 +55,4 @@ __fixtures__/custom-modules-dir/patches/
 ## Database
 
 # SQLite
-*.sqlite
+*.sqlite3
