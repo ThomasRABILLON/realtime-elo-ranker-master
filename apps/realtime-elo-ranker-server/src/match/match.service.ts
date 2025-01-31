@@ -22,8 +22,12 @@ export class MatchService {
 
     async addMatch(match: Match): Promise<Match> {
         console.log(match);
-        const winner = (await this.playerRepository.findBy({ id: match.winner }))[0];
-        const loser = (await this.playerRepository.findBy({ id: match.loser }))[0];
+        const winner = (
+            await this.playerRepository.findBy({ id: match.winner })
+        )[0];
+        const loser = (
+            await this.playerRepository.findBy({ id: match.loser })
+        )[0];
 
         if (!winner || !loser) {
             throw new Error('Invalid winner or loser');
@@ -35,7 +39,7 @@ export class MatchService {
             winner.rank,
             k,
             match.draw ? Result.DRAW : Result.WIN,
-            winProbability(winner.rank, loser.rank)
+            winProbability(winner.rank, loser.rank),
         );
         loser.rank = newRank(
             loser.rank,
@@ -46,8 +50,8 @@ export class MatchService {
 
         console.log(winner.rank, loser.rank);
 
-        this.playerRepository.save(winner);
-        this.playerRepository.save(loser);
+        await this.playerRepository.save(winner);
+        await this.playerRepository.save(loser);
 
         return this.matchRepository.save(match);
     }

@@ -1,4 +1,3 @@
-import { Match } from "../entities/match.entity";
+import { Match } from '../entities/match.entity';
 
-export class CreateMatchDto extends Match {
-}
+export class CreateMatchDto extends Match {}

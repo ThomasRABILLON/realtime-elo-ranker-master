@@ -16,7 +16,7 @@ export class PlayerService {
             players.length === 0
                 ? 0
                 : players.reduce((acc, player) => acc + player.rank, 0) /
-                players.length;
+                  players.length;
 
         return this.playerRepository.save(player);
     }

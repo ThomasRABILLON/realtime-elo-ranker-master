@@ -1,9 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { RankingController } from './rankings/ranking.controller';
-import { RankingService } from './rankings/ranking.service';
-import { MatchController } from './rankings/match.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerModule } from './player/player.module';
 import { RankingModule } from './ranking/ranking.module';
@@ -19,14 +14,9 @@ import { MatchModule } from './match/match.module';
         }),
         PlayerModule,
         RankingModule,
-        // MatchModule,
+        MatchModule,
     ],
-    controllers: [
-        AppController,
-        // PlayerController,
-        // RankingController,
-        MatchController,
-    ],
-    providers: [AppService, RankingService],
+    controllers: [],
+    providers: [],
 })
-export class AppModule { }
+export class AppModule {}
