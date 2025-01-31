@@ -1,5 +1,4 @@
 import { Controller, Get } from '@nestjs/common';
-// import { Player } from 'src/player/entities/player.entity';
 import { Player } from '../player/entities/player.entity';
 import { RankingService } from './ranking.service';
 

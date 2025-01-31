@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Match } from './entities/match.entity';
-import { Player } from 'src/player/entities/player.entity';
+import { Player } from '../player/entities/player.entity';
 import { newRank, winProbability } from './utils/match-calculation';
 import { Result } from './utils/result.enum';
-import { K } from 'src/constants';
+import { K } from '../constants';
 
 @Injectable()
 export class MatchService {
