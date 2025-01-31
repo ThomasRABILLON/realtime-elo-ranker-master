@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RankingController } from './ranking/ranking.controller';
-import { RankingService } from './ranking/ranking.service';
-import { MatchController } from './ranking/match.controller';
+import { RankingController } from './rankings/ranking.controller';
+import { RankingService } from './rankings/ranking.service';
+import { MatchController } from './rankings/match.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerModule } from './player/player.module';
+import { RankingModule } from './ranking/ranking.module';
+import { MatchModule } from './match/match.module';
 
 @Module({
     imports: [
@@ -16,11 +18,13 @@ import { PlayerModule } from './player/player.module';
             synchronize: true,
         }),
         PlayerModule,
+        RankingModule,
+        // MatchModule,
     ],
     controllers: [
         AppController,
         // PlayerController,
-        RankingController,
+        // RankingController,
         MatchController,
     ],
     providers: [AppService, RankingService],

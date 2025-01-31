@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { Controller, Get } from '@nestjs/common';
+import { Player } from 'src/player/entities/player.entity';
 import { RankingService } from './ranking.service';
-import { Player } from './interfaces/player.interface';
 
 @Controller('api/ranking')
 export class RankingController {
-  constructor(private rankingService: RankingService) {}
+    constructor(private rankingService: RankingService) {}
 
-  @Get()
-  async getRankings(): Promise<Player[]> {
-    return this.rankingService.getRankings();
-  }
+    @Get()
+    async getRanking(): Promise<Player[]> {
+        return this.rankingService.getRanking();
+    }
 }
