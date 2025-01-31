@@ -4,12 +4,8 @@ import { Repository } from 'typeorm';
 import { Match } from './entities/match.entity';
 import { Player } from 'src/player/entities/player.entity';
 import { newRank, winProbability } from './utils/match-calculation';
-
-enum Result {
-    WIN = 1,
-    LOSS = 0,
-    DRAW = 0.5,
-}
+import { Result } from './utils/result.enum';
+import { K } from 'src/constants';
 
 @Injectable()
 export class MatchService {
@@ -21,38 +17,40 @@ export class MatchService {
     ) {}
 
     async addMatch(match: Match): Promise<Match> {
-        console.log(match);
-        const winner = (
-            await this.playerRepository.findBy({ id: match.winner })
-        )[0];
-        const loser = (
-            await this.playerRepository.findBy({ id: match.loser })
-        )[0];
+        if (match.winner === null || match.loser === null)
+            throw new Error('Winner and loser must be provided');
+        if (match.winner === match.loser)
+            throw new Error('Winner and loser cannot be the same player');
 
-        if (!winner || !loser) {
-            throw new Error('Invalid winner or loser');
-        }
+        const [winner, loser] = await Promise.all([
+            this.playerRepository.findOneBy({ id: match.winner }),
+            this.playerRepository.findOneBy({ id: match.loser }),
+        ]);
 
-        console.log(winner, loser);
-        const k = 32;
+        if (!winner || !loser) throw new Error('Invalid winner or loser');
+
+        this.updatePlayerRanks(winner, loser, match.draw);
+
+        await Promise.all([
+            this.playerRepository.save(winner),
+            this.playerRepository.save(loser),
+        ]);
+
+        return this.matchRepository.save(match);
+    }
+
+    private updatePlayerRanks(winner: Player, loser: Player, draw: boolean) {
         winner.rank = newRank(
             winner.rank,
-            k,
-            match.draw ? Result.DRAW : Result.WIN,
+            K,
+            draw ? Result.DRAW : Result.WIN,
             winProbability(winner.rank, loser.rank),
         );
         loser.rank = newRank(
             loser.rank,
-            k,
-            match.draw ? Result.DRAW : Result.LOSS,
+            K,
+            draw ? Result.DRAW : Result.LOSS,
             winProbability(loser.rank, winner.rank),
         );
-
-        console.log(winner.rank, loser.rank);
-
-        await this.playerRepository.save(winner);
-        await this.playerRepository.save(loser);
-
-        return this.matchRepository.save(match);
     }
 }
