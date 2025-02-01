@@ -1,4 +1,4 @@
-import { ELO_SENSITIVITY_CONSTANT } from 'src/constants';
+import { ELO_SENSITIVITY_CONSTANT } from '../../constants';
 
 export const winProbability = (rank1: number, rank2: number): number => {
     return parseFloat(

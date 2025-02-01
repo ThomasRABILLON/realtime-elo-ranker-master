@@ -1,4 +1,4 @@
-import { ELO_DRAW, ELO_LOSS, ELO_WIN } from 'src/constants';
+import { ELO_DRAW, ELO_LOSS, ELO_WIN } from '../../constants';
 
 export enum Result {
     WIN = ELO_WIN,
