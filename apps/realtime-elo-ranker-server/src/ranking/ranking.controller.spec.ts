@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { RankingController } from './ranking.controller';
 import { RankingService } from './ranking.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { Player } from '../player/entities/player.entity';
 
 describe('RankingController', () => {
@@ -9,7 +9,7 @@ describe('RankingController', () => {
 
     beforeEach(async () => {
         const mockPlayerRepository = {
-            find: jest.fn().mockResolvedValue([]), // Mock d'une méthode standard
+            find: jest.fn().mockResolvedValue([]),
         };
 
         const module: TestingModule = await Test.createTestingModule({
