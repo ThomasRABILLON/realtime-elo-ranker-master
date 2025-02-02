@@ -13,4 +13,6 @@ export class RankingService {
     async getRanking(): Promise<Player[]> {
         return this.playerRepository.find();
     }
+
+    
 }
