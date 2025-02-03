@@ -89,7 +89,6 @@ export default function Home() {
       // console.error(error);
     }
     const eventSource = subscribeRankingEvents(API_BASE_URL);
-    eventSource.onopen = () => console.log('SSE connexion ouverte');
     eventSource.onmessage = (msg: MessageEvent) => {
       console.log(msg);
       const event: RankingEvent = JSON.parse(msg.data);
@@ -103,7 +102,7 @@ export default function Home() {
     };
     eventSource.onerror = (err) => {
       // TODO: toast error
-      // console.error(err);
+      console.error(err);
       eventSource.close();
     };
     return () => eventSource.close();

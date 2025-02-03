@@ -10,15 +10,15 @@ export class PlayerService {
         @InjectRepository(Player)
         private playerRepository: Repository<Player>,
         private eventEmitter: EventEmitter2,
-    ) {}
+    ) { }
 
     async addPlayer(player: Player): Promise<Player> {
         const players = await this.getPlayers();
-        player.rank =
+        player.rank = Math.round(
             players.length === 0
                 ? 0
                 : players.reduce((acc, player) => acc + player.rank, 0) /
-                  players.length;
+                players.length);
 
         this.eventEmitter.emit('player.updated', player);
         return this.playerRepository.save(player);

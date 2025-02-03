@@ -6,6 +6,7 @@ import { Player } from '../player/entities/player.entity';
 import { newRank, winProbability } from './utils/match-calculation';
 import { Result } from './utils/result.enum';
 import { K } from '../constants';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class MatchService {
@@ -14,6 +15,7 @@ export class MatchService {
         private matchRepository: Repository<Match>,
         @InjectRepository(Player)
         private playerRepository: Repository<Player>,
+        private eventEmitter: EventEmitter2,
     ) {}
 
     async addMatch(match: Match): Promise<Match> {
@@ -31,10 +33,11 @@ export class MatchService {
 
         this.updatePlayerRanks(winner, loser, match.draw);
 
-        await Promise.all([
-            this.playerRepository.save(winner),
-            this.playerRepository.save(loser),
-        ]);
+        this.playerRepository.save(winner)
+        this.playerRepository.save(loser)
+
+        this.eventEmitter.emit('player.updated', winner);
+        this.eventEmitter.emit('player.updated', loser);
 
         return this.matchRepository.save(match);
     }
