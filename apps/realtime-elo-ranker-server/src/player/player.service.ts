@@ -19,9 +19,14 @@ export class PlayerService {
                 ? 0
                 : players.reduce((acc, player) => acc + player.rank, 0) /
                 players.length);
-
-        this.eventEmitter.emit('player.updated', player);
-        return this.playerRepository.save(player);
+        
+        return this.playerRepository.save(player).then((player) => {
+            this.eventEmitter.emit('player.added', player);
+            return player;
+        }).catch((error) => {
+            this.eventEmitter.emit('player.error', error);
+            throw new Error('Failed to add player');
+        });
     }
 
     async getPlayers(): Promise<Player[]> {

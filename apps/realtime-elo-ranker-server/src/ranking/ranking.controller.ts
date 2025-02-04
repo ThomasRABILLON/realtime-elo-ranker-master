@@ -26,7 +26,17 @@ export class RankingController {
                 subscriber.next(event);
             };
 
+            const onError = (error: Error) => {
+                const event: MessageEvent = new MessageEvent('message', {
+                    data: {type: 'Error', message: error.message},
+                });
+                subscriber.next(event);
+            };
+
             this.eventEmitter.on('player.updated', onPlayerUpdated);
+            this.eventEmitter.on('player.added', onPlayerUpdated);
+
+            this.eventEmitter.on('player.error', onError);
         });
     }
 }

@@ -71,12 +71,7 @@ export default function Home() {
   const updateLadderData = useCallback((player: PlayerData) => {
     setLadderData((prevData) => {
       return quickSortPlayers(
-        prevData.map((p) => {
-          if (p.id === player.id) {
-            return player;
-          }
-          return p;
-        })
+        prevData.filter((p) => p.id !== player.id).concat(player)
       );
     });
   }, []);
@@ -86,14 +81,13 @@ export default function Home() {
       fetchRanking(API_BASE_URL).then(setLadderData);
     } catch (error) {
       // TODO: toast error
-      // console.error(error);
+      console.error(error);
     }
     const eventSource = subscribeRankingEvents(API_BASE_URL);
     eventSource.onmessage = (msg: MessageEvent) => {
-      console.log(msg);
       const event: RankingEvent = JSON.parse(msg.data);
       if (event.type === "Error") {
-        // console.error(event.message);
+        console.error(event.message);
         return;
       }
       if (event.type === RankingEventType.RankingUpdate) {

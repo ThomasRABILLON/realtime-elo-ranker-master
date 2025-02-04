@@ -33,11 +33,13 @@ export class MatchService {
 
         this.updatePlayerRanks(winner, loser, match.draw);
 
-        this.playerRepository.save(winner)
-        this.playerRepository.save(loser)
+        this.playerRepository.save(winner).then((player) => {
+            this.eventEmitter.emit('player.updated', player);
+        });
 
-        this.eventEmitter.emit('player.updated', winner);
-        this.eventEmitter.emit('player.updated', loser);
+        this.playerRepository.save(loser).then((player) => {
+            this.eventEmitter.emit('player.updated', player);
+        });
 
         return this.matchRepository.save(match);
     }
