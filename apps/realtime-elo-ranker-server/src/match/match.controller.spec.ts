@@ -4,6 +4,7 @@ import { MatchController } from './match.controller';
 import { MatchService } from './match.service';
 import { Match } from './entities/match.entity';
 import { Player } from '../player/entities/player.entity';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('MatchController', () => {
     let controller: MatchController;
@@ -29,11 +30,32 @@ describe('MatchController', () => {
 
         const mockPlayerRepository = {
             findOneBy: jest.fn().mockImplementation(({ id }) => {
-                if (id === 'test1') return { id: 'test1', rank: 0 };
-                if (id === 'test2') return { id: 'test2', rank: 10 };
-                return null;
+            if (id === 'test1') return { id: 'test1', rank: 0 };
+            if (id === 'test2') return { id: 'test2', rank: 10 };
+            return null;
             }),
-            save: jest.fn().mockImplementation((player: Player) => player),
+            save: jest.fn().mockImplementation((player: Player) => {
+            interface MockSaveReturn {
+                then: (onFulfilled: (player: Player) => void) => {
+                    catch: (onRejected: (error: any) => void) => void;
+                };
+            }
+
+            const mockSaveImplementation = (player: Player): MockSaveReturn => {
+                return {
+                    then: (onFulfilled: (player: Player) => void) => {
+                        onFulfilled(player);
+                        return {
+                            catch: (onRejected: (error: any) => void) => {
+                                // No error, so do nothing
+                            }
+                        };
+                    }
+                };
+            };
+
+            return mockSaveImplementation(player);
+            }),
         };
 
         const module: TestingModule = await Test.createTestingModule({
@@ -47,6 +69,10 @@ describe('MatchController', () => {
                 {
                     provide: getRepositoryToken(Player),
                     useValue: mockPlayerRepository,
+                },
+                {
+                    provide: EventEmitter2,
+                    useValue: { emit: jest.fn() },
                 },
             ],
         }).compile();

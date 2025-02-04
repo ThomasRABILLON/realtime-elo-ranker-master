@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { RankingController } from './ranking.controller';
 import { RankingService } from './ranking.service';
 import { Player } from '../player/entities/player.entity';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('RankingController', () => {
     let controller: RankingController;
@@ -19,6 +20,10 @@ describe('RankingController', () => {
                 {
                     provide: getRepositoryToken(Player),
                     useValue: mockPlayerRepository,
+                },
+                {
+                    provide: EventEmitter2,
+                    useValue: { emit: jest.fn() },
                 },
             ],
         }).compile();
