@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { MatchService } from './match.service';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { Match } from './entities/match.entity';
@@ -9,6 +9,10 @@ export class MatchController {
 
     @Post()
     async create(@Body() createMatchDto: CreateMatchDto): Promise<Match> {
-        return this.matchService.addMatch(createMatchDto);
+        try {
+            return await this.matchService.addMatch(createMatchDto);
+        } catch (error) {
+            throw new BadRequestException('Invalid request');
+        }
     }
 }

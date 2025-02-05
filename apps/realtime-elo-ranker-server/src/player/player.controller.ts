@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { Player } from './entities/player.entity';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { PlayerService } from './player.service';
@@ -9,6 +9,10 @@ export class PlayerController {
 
     @Post()
     async addPlayer(@Body() createPlayerDto: CreatePlayerDto): Promise<Player> {
-        return this.playerService.addPlayer(createPlayerDto);
+        try {
+            return await this.playerService.addPlayer(createPlayerDto);
+        } catch (error) {
+            throw new BadRequestException('Invalid request');
+        }
     }
 }
