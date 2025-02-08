@@ -33,13 +33,11 @@ export class MatchService {
 
         this.updatePlayerRanks(winner, loser, match.draw);
 
-        this.playerRepository.save(winner).then((player) => {
-            this.eventEmitter.emit('player.updated', player);
-        });
+        const savedWinner = await this.playerRepository.save(winner);
+        this.eventEmitter.emit('player.updated', savedWinner);
 
-        this.playerRepository.save(loser).then((player) => {
-            this.eventEmitter.emit('player.updated', player);
-        });
+        const savedLoser = await this.playerRepository.save(loser);
+        this.eventEmitter.emit('player.updated', savedLoser);
 
         return this.matchRepository.save(match);
     }

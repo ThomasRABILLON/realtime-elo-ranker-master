@@ -9,10 +9,10 @@ export class RankingController {
     constructor(
         private rankingService: RankingService,
         private eventEmitter: EventEmitter2,
-    ) { }
+    ) {}
 
     @Get()
-    async getRanking(): Promise<Player[]> {
+    getRanking(): Promise<Player[]> {
         return this.rankingService.getRanking();
     }
 
@@ -21,14 +21,14 @@ export class RankingController {
         return new Observable((subscriber) => {
             const onPlayerUpdated = (player: Player) => {
                 const event: MessageEvent = new MessageEvent('message', {
-                    data: {type: 'RankingUpdate', player: player},
+                    data: { type: 'RankingUpdate', player: player },
                 });
                 subscriber.next(event);
             };
 
             const onError = (error: Error) => {
                 const event: MessageEvent = new MessageEvent('message', {
-                    data: {type: 'Error', message: error.message},
+                    data: { type: 'Error', message: error.message },
                 });
                 subscriber.next(event);
             };

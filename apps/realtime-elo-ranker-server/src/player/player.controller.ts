@@ -8,11 +8,11 @@ export class PlayerController {
     constructor(private playerService: PlayerService) {}
 
     @Post()
-    async addPlayer(@Body() createPlayerDto: CreatePlayerDto): Promise<Player> {
-        try {
-            return await this.playerService.addPlayer(createPlayerDto);
-        } catch (error) {
-            throw new BadRequestException('Invalid request');
-        }
+    addPlayer(@Body() createPlayerDto: CreatePlayerDto): Promise<Player> {
+        return this.playerService
+            .addPlayer(createPlayerDto)
+            .catch((error: Error) => {
+                throw new BadRequestException(error.message);
+            });
     }
 }

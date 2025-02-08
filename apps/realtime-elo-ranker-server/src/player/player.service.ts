@@ -10,7 +10,7 @@ export class PlayerService {
         @InjectRepository(Player)
         private playerRepository: Repository<Player>,
         private eventEmitter: EventEmitter2,
-    ) { }
+    ) {}
 
     async addPlayer(player: Player): Promise<Player> {
         const players = await this.getPlayers();
@@ -18,15 +18,19 @@ export class PlayerService {
             players.length === 0
                 ? 0
                 : players.reduce((acc, player) => acc + player.rank, 0) /
-                players.length);
-        
-        return this.playerRepository.save(player).then((player) => {
-            this.eventEmitter.emit('player.added', player);
-            return player;
-        }).catch((error) => {
-            this.eventEmitter.emit('player.error', error);
-            throw new Error('Failed to add player');
-        });
+                      players.length,
+        );
+
+        return this.playerRepository
+            .save(player)
+            .then((player) => {
+                this.eventEmitter.emit('player.added', player);
+                return player;
+            })
+            .catch((error) => {
+                this.eventEmitter.emit('player.error', error);
+                throw new Error('Failed to add player');
+            });
     }
 
     async getPlayers(): Promise<Player[]> {

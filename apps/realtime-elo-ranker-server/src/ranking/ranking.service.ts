@@ -10,9 +10,7 @@ export class RankingService {
         private playerRepository: Repository<Player>,
     ) {}
 
-    async getRanking(): Promise<Player[]> {
+    getRanking(): Promise<Player[]> {
         return this.playerRepository.find();
     }
-
-    
 }

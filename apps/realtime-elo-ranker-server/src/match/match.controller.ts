@@ -8,11 +8,11 @@ export class MatchController {
     constructor(private readonly matchService: MatchService) {}
 
     @Post()
-    async create(@Body() createMatchDto: CreateMatchDto): Promise<Match> {
-        try {
-            return await this.matchService.addMatch(createMatchDto);
-        } catch (error) {
-            throw new BadRequestException('Invalid request');
-        }
+    create(@Body() createMatchDto: CreateMatchDto): Promise<Match> {
+        return this.matchService
+            .addMatch(createMatchDto)
+            .catch((error: Error) => {
+                throw new BadRequestException(error.message);
+            });
     }
 }
