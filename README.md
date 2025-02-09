@@ -31,6 +31,24 @@ Realtime Elo Ranker est une application web permettant de simuler des matchs ent
 `libs/realtime-elo-gui` : Librairie de composants graphiques
   - Contiendra les composants graphiques réutilisables pour le client
 
+## Lancer le serveur
+
+```bash
+pnpm run apps:server:dev
+```
+
+### Lancer les tests du serveur
+
+#### Tests unitaire
+```bash
+pnpm run apps:server:test
+```
+
+#### Tests E2E
+```bash
+pnpm run apps:server:test:e2e
+```
+
 ## Lancer l'application cliente
 
 ```bash
